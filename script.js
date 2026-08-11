@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_ENDPOINT = 'https://mental-health-predection-score.onrender.com';
+  const API_ENDPOINT = 'https://mental-health-predection-score.onrender.com/predict'; // Update this to your FastAPI endpoint
 
   // Form & Card Elements
   const form = document.getElementById('prediction-form');
