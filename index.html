@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindScore AI - Student Mental Health Prediction System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <main class="container">
+    <!-- Header / Hero Section -->
+    <header class="hero">
+      <div class="brand">
+        <span class="brand-badge">AI / ML Health Analytics</span>
+        <h1 class="brand-title">MindScore AI</h1>
+        <p class="brand-subtitle">Student Mental Health Prediction System</p>
+      </div>
+      <h2 class="hero-heading">Understand Your Digital Lifestyle</h2>
+      <p class="hero-subtext">
+        Estimate your mental health score using your lifestyle, academic habits and social media usage.
+      </p>
+    </header>
+
+    <!-- Error Banner -->
+    <div id="error-banner" class="error-banner hidden" role="alert">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <strong id="error-title">Unable to connect to the prediction server.</strong>
+        <p id="error-message">Please make sure FastAPI is running at http://127.0.0.1:8000</p>
+      </div>
+    </div>
+
+    <!-- Main Form Section -->
+    <section id="assessment-card" class="card">
+      <form id="prediction-form" novalidate>
+        
+        <!-- SECTION 1: Personal Information -->
+        <div class="form-section">
+          <div class="section-header">
+            <span class="step-num">01</span>
+            <h3>Personal Information</h3>
+          </div>
+          <div class="form-grid">
+            <!-- Age -->
+            <div class="form-group">
+              <label for="age">Age <span class="req">*</span></label>
+              <input type="number" id="age" name="age" min="10" max="100" value="21" required placeholder="10 - 100" />
+              <span class="field-error" id="error-age"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+              <label for="gender">Gender <span class="req">*</span></label>
+              <select id="gender" name="gender" required>
+                <option value="Male" selected>Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <span class="field-error" id="error-gender"></span>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+              <label for="country">Country <span class="req">*</span></label>
+              <select id="country" name="country" required>
+                <option value="India" selected>India</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="UK">UK</option>
+                <option value="Germany">Germany</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Turkey">Turkey</option>
+                <option value="France">France</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="field-error" id="error-country"></span>
+            </div>
+
+            <!-- Academic Level -->
+            <div class="form-group">
+              <label for="academic_level">Academic Level <span class="req">*</span></label>
+              <select id="academic_level" name="academic_level" required>
+                <option value="Undergraduate" selected>Undergraduate</option>
+                <option value="Graduate">Graduate</option>
+                <option value="High School">High School</option>
+              </select>
+              <span class="field-error" id="error-academic_level"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: Social Media Usage -->
+        <div class="form-section">
+          <div class="section-header">
+            <span class="step-num">02</span>
+            <h3>Social Media Usage</h3>
+          </div>
+          <div class="form-grid">
+            <!-- Most Used Platform -->
+            <div class="form-group">
+              <label for="most_used_platform">Most Used Platform <span class="req">*</span></label>
+              <select id="most_used_platform" name="most_used_platform" required>
+                <option value="Instagram" selected>Instagram</option>
+                <option value="Facebook">Facebook</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Snapchat">Snapchat</option>
+                <option value="Twitter">Twitter</option>
+                <option value="YouTube">YouTube</option>
+                <option value="TikTok">TikTok</option>
+                <option value="LINE">LINE</option>
+                <option value="KakaoTalk">KakaoTalk</option>
+                <option value="VKontakte">VKontakte</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="WeChat">WeChat</option>
+              </select>
+              <span class="field-error" id="error-most_used_platform"></span>
+            </div>
+
+            <!-- Purpose of Use -->
+            <div class="form-group">
+              <label for="purpose_of_use">Purpose Of Use <span class="req">*</span></label>
+              <select id="purpose_of_use" name="purpose_of_use" required>
+                <option value="Entertainment" selected>Entertainment</option>
+                <option value="Networking">Networking</option>
+                <option value="Education">Education</option>
+                <option value="News">News</option>
+              </select>
+              <span class="field-error" id="error-purpose_of_use"></span>
+            </div>
+
+            <!-- Avg Daily Usage Hours (Slider) -->
+            <div class="form-group full-width">
+              <div class="label-with-value">
+                <label for="avg_daily_usage_hours">Average Daily Usage Hours</label>
+                <span class="badge" id="val-avg_daily_usage_hours">4.5 hrs</span>
+              </div>
+              <input type="range" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="0.5" value="4.5">
+              <span class="field-error" id="error-avg_daily_usage_hours"></span>
+            </div>
+
+            <!-- Daily Unlocks -->
+            <div class="form-group full-width">
+              <div class="label-with-value">
+                <label for="daily_unlocks">Daily Phone Unlocks</label>
+                <span class="badge" id="val-daily_unlocks">50 times</span>
+              </div>
+              <input type="range" id="daily_unlocks" name="daily_unlocks" min="0" max="200" step="1" value="50">
+              <span class="field-error" id="error-daily_unlocks"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Lifestyle & Wellbeing -->
+        <div class="form-section">
+          <div class="section-header">
+            <span class="step-num">03</span>
+            <h3>Lifestyle & Habits</h3>
+          </div>
+          <div class="form-grid">
+            <!-- Study Hours -->
+            <div class="form-group">
+              <div class="label-with-value">
+                <label for="study_hours">Study Hours</label>
+                <span class="badge" id="val-study_hours">5.0 hrs</span>
+              </div>
+              <input type="range" id="study_hours" name="study_hours" min="0" max="24" step="0.5" value="5.0">
+              <span class="field-error" id="error-study_hours"></span>
+            </div>
+
+            <!-- Physical Activity Hours -->
+            <div class="form-group">
+              <div class="label-with-value">
+                <label for="physical_activity_hours">Physical Activity Hours</label>
+                <span class="badge" id="val-physical_activity_hours">1.0 hrs</span>
+              </div>
+              <input type="range" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="0.5" value="1.0">
+              <span class="field-error" id="error-physical_activity_hours"></span>
+            </div>
+
+            <!-- Sleep Hours -->
+            <div class="form-group">
+              <div class="label-with-value">
+                <label for="sleep_hours_per_night">Sleep Hours Per Night</label>
+                <span class="badge" id="val-sleep_hours_per_night">7.0 hrs</span>
+              </div>
+              <input type="range" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="0.5" value="7.0">
+              <span class="field-error" id="error-sleep_hours_per_night"></span>
+            </div>
+
+            <!-- Stress Level -->
+            <div class="form-group">
+              <label for="stress_level">Stress Level <span class="req">*</span></label>
+              <select id="stress_level" name="stress_level" required>
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+                <option value="Very High">Very High</option>
+              </select>
+              <span class="field-error" id="error-stress_level"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="submit" id="predict-btn" class="btn primary-btn">
+            <span class="btn-text">Analyze My Mental Health</span>
+            <span class="spinner hidden" id="btn-spinner"></span>
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- RESULT CARD (Hidden by default) -->
+    <section id="result-card" class="card result-card hidden">
+      <div class="result-header">
+        <h3>Your Mental Health Score</h3>
+        <p class="result-subtitle">Based on your provided lifestyle and digital usage metrics.</p>
+      </div>
+
+      <!-- Meter Component -->
+      <div class="meter-container">
+        <svg class="meter-svg" viewBox="0 0 160 160">
+          <circle class="meter-bg" cx="80" cy="80" r="68"></circle>
+          <circle id="meter-progress" class="meter-progress" cx="80" cy="80" r="68"></circle>
+        </svg>
+        <div class="meter-center">
+          <span id="score-display" class="score-value">0.00</span>
+          <span class="score-max">/ 10</span>
+        </div>
+      </div>
+
+      <!-- Category Tag -->
+      <div class="interpretation-badge-wrap">
+        <span id="interpretation-badge" class="interpretation-badge">Good</span>
+      </div>
+
+      <!-- Disclaimer -->
+      <p class="disclaimer">
+        ℹ️ <strong>This prediction is for educational purposes only and is not a medical diagnosis.</strong>
+      </p>
+
+      <!-- Lifestyle Summary -->
+      <div class="summary-box">
+        <h4>Input Lifestyle Summary</h4>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="sum-label">Social Media Usage</span>
+            <span id="sum-usage" class="sum-value">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="sum-label">Daily Unlocks</span>
+            <span id="sum-unlocks" class="sum-value">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="sum-label">Sleep</span>
+            <span id="sum-sleep" class="sum-value">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="sum-label">Study Hours</span>
+            <span id="sum-study" class="sum-value">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="sum-label">Physical Activity</span>
+            <span id="sum-activity" class="sum-value">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="sum-label">Stress Level</span>
+            <span id="sum-stress" class="sum-value">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" id="analyze-again-btn" class="btn secondary-btn">Analyze Again</button>
+        <button type="button" id="reset-form-btn" class="btn outline-btn">Reset Form</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
