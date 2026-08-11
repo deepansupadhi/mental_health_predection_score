@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_ENDPOINT = 'http://127.0.0.1:8000/predict';
+  const API_ENDPOINT = 'https://mental-health-predection-score.onrender.com';
 
   // Form & Card Elements
   const form = document.getElementById('prediction-form');
